@@ -196,7 +196,7 @@ body {
 
   <header class="scoreboard-header">
     <div class="header-left">
-      <span class="league-tag">// Thessaloniki Basketaki League</span>
+      <span class="league-tag">// Thessaloniki Amateur League</span>
       <div><div class="team-name-top">AIR</div><div class="team-name-bot">BALLERS</div></div>
       <span class="season-label">2025 – 26 Season</span>
     </div>
@@ -298,8 +298,7 @@ body {
       <th class="r">RPG</th>
       <th class="r">APG</th>
       <th class="r">SPG</th>
-      <th class="r">BPG</th>
-      <th class="r">FG%</th>
+      <th class="r">FT%</th>
       <th class="r">2P%</th>
       <th class="r">3P%</th>
     </tr></thead>
@@ -451,16 +450,25 @@ function buildResults(doc) {
 }
 
 // ─── PLAYER STATS ────────────────────────────────────────────────────────────
-// TD layout (from your console output):
-// [0]=name [1]=GP [2]=? [3]=total pts [4]=PPG [5]=total reb [6]=RPG
-// [7]=total ast [8]=APG [9]=total stl [10]=? [11]=? [12]=SPG
-// [13]=total blk [14]=? [15]=? [16]=BPG [17]=TO [18]=TOPG
-// [19]=fouls [20]=? [21]=FGM/FGA [22]=FG% [23]=2PM/2PA [24]=2P% [25]=3PM/3PA [26]=3P%
+// Headers (confirmed): Παίχτης|ΑΓ|MVP|Λεπτα|(ΜΟ)|Ποντοι|(ΜΟ)|EFF|EFF(ΜΟ)|ΡΜΠ|Επιθ|Αμυ|(ΜΟ)|ΑΣΙ|ΑΣΙ(ΜΟ)|ΚΛΨ|ΚΛΨ(ΜΟ)|ΛΑΘ|ΛΑΘ(ΜΟ)|ΚΟΨ|ΚΟΨ(ΜΟ)|ΒOΛΕΣ|%|2Ποντα|%|3Ποντα|%
+// TD[0]=name  TD[1]=GP  TD[2]=MVP  TD[3]=total mins  TD[4]=mins avg
+// TD[5]=total pts  TD[6]=PPG  TD[7]=total EFF  TD[8]=EFF avg
+// TD[9]=total reb  TD[10]=off reb  TD[11]=def reb  TD[12]=RPG
+// TD[13]=total ast  TD[14]=APG  TD[15]=total stl  TD[16]=SPG
+// TD[17]=total to   TD[18]=TOPG  TD[19]=total fouls  TD[20]=fouls avg
+// TD[21]=FT m/a  TD[22]=FT%  TD[23]=2P m/a  TD[24]=2P%  TD[25]=3P m/a  TD[26]=3P%
 function buildStats(doc) {
-  const rows = doc.querySelectorAll('table tbody tr');
+  // ONLY use the first table (Table 0) — others are season breakdowns with zeros
+  const firstTable = doc.querySelector('table');
+  if (!firstTable) {
+    $('stats-body').innerHTML = `<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--muted);font-family:var(--mono);font-size:0.7rem;">No stats found</td></tr>`;
+    return {};
+  }
+
+  const rows = firstTable.querySelectorAll('tbody tr');
   let html = '';
   let count = 0;
-  const playerStats = {};  // for roster cards
+  const playerStats = {};
 
   rows.forEach((tr, i) => {
     const tds = tr.querySelectorAll('td');
@@ -470,22 +478,22 @@ function buildStats(doc) {
     if (!name || name.length < 2) return;
 
     const gp   = tds[1].textContent.trim();
-    const ppg  = tds[4].textContent.trim();
-    const rpg  = tds[6].textContent.trim();
-    const apg  = tds[8].textContent.trim();
-    const spg  = tds[12] ? tds[12].textContent.trim() : '—';
-    const bpg  = tds[16] ? tds[16].textContent.trim() : '—';
-    const fgp  = tds[22] ? tds[22].textContent.trim() : '—';
-    const twop = tds[24] ? tds[24].textContent.trim() : '—';
-    const thrp = tds[26] ? tds[26].textContent.trim() : '—';
+    const ppg  = tds[6].textContent.trim();   // Ποντοι (ΜΟ) = PPG
+    const rpg  = tds[12].textContent.trim();  // ΡΜΠ (ΜΟ) = RPG
+    const apg  = tds[14].textContent.trim();  // ΑΣΙ (ΜΟ) = APG
+    const spg  = tds[16].textContent.trim();  // ΚΛΨ (ΜΟ) = SPG
+    const ftp  = tds[22].textContent.trim();  // FT%
+    const twop = tds[24].textContent.trim();  // 2P%
+    const thrp = tds[26].textContent.trim();  // 3P%
 
-    // Store for roster cards
-    const lastName = name.split(' ').pop();
+    // Greek name format: "Lastname Firstname" — first word is surname
+    const parts    = name.split(' ');
+    const lastName = parts[0]; // first word = Greek surname
     playerStats[lastName] = { ppg, rpg, apg };
 
     const ppgNum = num(ppg);
-    const odd = i%2===0 ? 'row-odd' : '';
-    const hiPpg = ppgNum >= 15 ? 'stat-hi' : '';
+    const odd    = i%2===0 ? 'row-odd' : '';
+    const hiPpg  = ppgNum >= 10 ? 'stat-hi' : '';
 
     html += `<tr class="${odd}">
       <td class="stat-name">${name}</td>
@@ -494,8 +502,7 @@ function buildStats(doc) {
       <td class="r">${rpg}</td>
       <td class="r">${apg}</td>
       <td class="r">${spg}</td>
-      <td class="r">${bpg}</td>
-      <td class="r">${fgp}</td>
+      <td class="r">${ftp}</td>
       <td class="r">${twop}</td>
       <td class="r">${thrp}</td>
     </tr>`;
@@ -509,8 +516,11 @@ function buildStats(doc) {
 
 // ─── ROSTER ──────────────────────────────────────────────────────────────────
 function buildRoster(doc, playerStats) {
-  // Basketaki roster page — try player cards first, then table
-  const rows = doc.querySelectorAll('table tbody tr');
+  // Use only the first table (Table 0 has real stats)
+  const firstTable = doc.querySelector('table');
+  if (!firstTable) { loadCSVRoster(playerStats); return; }
+
+  const rows = firstTable.querySelectorAll('tbody tr');
   let html = '';
   let count = 0;
 
@@ -518,41 +528,33 @@ function buildRoster(doc, playerStats) {
     const tds = tr.querySelectorAll('td');
     if (tds.length < 2) return;
 
-    // Find the name link
-    const nameEl = tr.querySelector('a') || tds[0];
-    const fullName = nameEl.textContent.trim();
+    const fullName = tds[0].textContent.trim();
     if (!fullName || fullName.length < 2) return;
 
+    // Greek format: "Lastname Firstname [Middle]"
+    // First word = surname, rest = first name
     const parts    = fullName.split(' ');
-    const ini      = parts.slice(0,2).map(w => w[0]||'').join('').toUpperCase();
-    const lastName = parts[parts.length-1].toUpperCase();
+    const surname  = parts[0];                              // e.g. "Ανδρεαδάκης"
+    const firstName= parts.slice(1).join(' ');              // e.g. "Εμμ. Νικόλαος"
+    const ini      = (surname[0]||(firstName[0]||'?')).toUpperCase() +
+                     (firstName[0]||'').toUpperCase();      // initials from surname+first
+    const displayName = surname.toUpperCase();
 
-    // Try to get photo from img
-    const img = tr.querySelector('img');
-    const photoSrc = img ? img.src : '';
-    const avatarInner = photoSrc
-      ? `<img src="${photoSrc}" alt="${fullName}" onerror="this.parentElement.innerHTML='${ini}'">`
-      : ini;
-
-    // Stats for this player
-    const stats = playerStats[parts[parts.length-1]] || {};
+    // Match stats using surname (first word) as key
+    const stats    = playerStats[surname] || {};
     const statLine = stats.ppg ? `${stats.ppg} PPG · ${stats.rpg} RPG` : '';
 
     html += `<div class="player-tile">
       <div class="p-number"></div>
-      <div class="p-avatar">${avatarInner}</div>
-      <div class="p-name">${lastName}</div>
-      <div class="p-pos">${fullName}</div>
+      <div class="p-avatar">${ini}</div>
+      <div class="p-name">${displayName}</div>
+      <div class="p-pos" style="font-size:0.5rem;color:#333;">${firstName}</div>
       ${statLine ? `<div class="p-stat">${statLine}</div>` : ''}
     </div>`;
     count++;
   });
 
-  if (!count) {
-    // Fall back to players.csv
-    loadCSVRoster(playerStats);
-    return;
-  }
+  if (!count) { loadCSVRoster(playerStats); return; }
 
   $('roster-label').textContent = `Active Roster — ${count} Players`;
   $('roster-grid').innerHTML = html;
@@ -679,7 +681,7 @@ function buildTicker(stats, ng) {
   const opp = ng ? ng.oppName.toUpperCase() : '—';
   const ha  = ng ? ng.ha.toUpperCase() : '';
   const items = [
-    `AIR BALLERS <span class="ticker-sep">·</span> THESSALONIKI BASKETAKI LEAGUE`,
+    `AIR BALLERS <span class="ticker-sep">·</span> THESSALONIKI AMATEUR LEAGUE`,
     `SEASON 2025–26 <span class="ticker-sep">·</span> RECORD ${stats.wins}W – ${stats.losses}L`,
     `NEXT GAME <span class="ticker-sep">·</span> VS ${opp} <span class="ticker-sep">·</span> ${ha}`,
     `WIN PCT ${stats.pct} <span class="ticker-sep">·</span> STREAK ${stats.st==='neutral'?'—':(stats.st==='win'?'W':'L')+stats.sc}`,
