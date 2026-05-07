@@ -244,13 +244,13 @@ body {
   <div class="load-bar-wrap"><div class="load-bar" id="load-bar"></div></div>
 </div>
 
-<div class="ticker-wrap"><div class="ticker-track" id="ticker"><span class="ticker-item">AIR BALLERS <span class="ticker-sep">·</span> THESSALONIKI AMATEUR LEAGUE <span class="ticker-sep">·</span> 2025–26 SEASON</span><span class="ticker-item">AIR BALLERS <span class="ticker-sep">·</span> THESSALONIKI AMATEUR LEAGUE <span class="ticker-sep">·</span> 2025–26 SEASON</span></div></div>
+<div class="ticker-wrap"><div class="ticker-track" id="ticker"><span class="ticker-item">AIR BALLERS <span class="ticker-sep">·</span> THESSALONIKI BASKETAKI LEAGUE <span class="ticker-sep">·</span> 2025–26 SEASON</span><span class="ticker-item">AIR BALLERS <span class="ticker-sep">·</span> THESSALONIKI BASKETAKI LEAGUE <span class="ticker-sep">·</span> 2025–26 SEASON</span></div></div>
 
 <div class="arena">
 
   <header class="scoreboard-header">
     <div class="header-left">
-      <span class="league-tag">// Thessaloniki Amateur League</span>
+      <span class="league-tag">// Thessaloniki Basketaki League</span>
       <div><div class="team-name-top">AIR</div><div class="team-name-bot">BALLERS</div></div>
       <span class="season-label">2025 – 26 Season</span>
     </div>
@@ -638,7 +638,7 @@ function buildTicker(data) {
   const ha  = nextGame ? nextGame.ha.toUpperCase() : '';
   const sl  = streak.type==='neutral' ? '—' : (streak.type==='win'?'W':'L') + streak.count;
   const items = [
-    `AIR BALLERS <span class="ticker-sep">·</span> THESSALONIKI AMATEUR LEAGUE`,
+    `AIR BALLERS <span class="ticker-sep">·</span> THESSALONIKI BASKETAKI LEAGUE`,
     `SEASON 2025–26 <span class="ticker-sep">·</span> RECORD ${record.wins}W – ${record.losses}L`,
     `NEXT GAME <span class="ticker-sep">·</span> VS ${opp} <span class="ticker-sep">·</span> ${ha}`,
     `WIN PCT ${record.pct}% <span class="ticker-sep">·</span> STREAK ${sl}`,
