@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-25T10:10:08.144133",
+  "updated": "2026-05-28T10:05:24.650203",
   "record": {
     "wins": 14,
     "losses": 13,
@@ -59,16 +59,16 @@
       "ts": "2026-06-13T20:30:00"
     },
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "17/06/2026 19:00",
+      "date": "17/06/2026",
+      "time": "19:00",
       "opponent": "East Side Pylaia",
       "oppSlug": "east-side-pylaia",
       "ha": "Away",
-      "venue": "",
+      "venue": "Respect Arena FIBA",
       "cat": "S.Development 2 Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-06-17T19:00:00"
     },
     {
       "dateTime": "-",
