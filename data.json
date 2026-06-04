@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-01T11:37:59.634262",
+  "updated": "2026-06-04T09:58:24.046533",
   "record": {
     "wins": 14,
     "losses": 14,
@@ -10,29 +10,29 @@
     "count": 2
   },
   "nextGame": {
-    "dateTime": "06/06/2026 18:30",
-    "date": "06/06/2026",
-    "time": "18:30",
+    "dateTime": "07/06/2026 21:00",
+    "date": "07/06/2026",
+    "time": "21:00",
     "opponent": "Alley Oopsies",
     "oppSlug": "alley-oopsies",
     "ha": "Away",
-    "venue": "Respect Arena NBA",
+    "venue": "10Academy Basketball Hall",
     "cat": "S.Development 2 Thessaloniki",
     "isFuture": true,
-    "ts": "2026-06-06T18:30:00"
+    "ts": "2026-06-07T21:00:00"
   },
   "schedule": [
     {
-      "dateTime": "06/06/2026 18:30",
-      "date": "06/06/2026",
-      "time": "18:30",
+      "dateTime": "07/06/2026 21:00",
+      "date": "07/06/2026",
+      "time": "21:00",
       "opponent": "Alley Oopsies",
       "oppSlug": "alley-oopsies",
       "ha": "Away",
-      "venue": "Respect Arena NBA",
+      "venue": "10Academy Basketball Hall",
       "cat": "S.Development 2 Thessaloniki",
       "isFuture": true,
-      "ts": "2026-06-06T18:30:00"
+      "ts": "2026-06-07T21:00:00"
     },
     {
       "dateTime": "13/06/2026 20:30",
@@ -59,28 +59,28 @@
       "ts": "2026-06-17T19:00:00"
     },
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "22/06/2026 22:00",
+      "date": "22/06/2026",
+      "time": "22:00",
       "opponent": "ΠΟΠ84",
       "oppSlug": "pop84",
       "ha": "Away",
-      "venue": "",
+      "venue": "Respect Arena NBA",
       "cat": "S.Development 2 Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-06-22T22:00:00"
     },
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "25/06/2026 20:30",
+      "date": "25/06/2026",
+      "time": "20:30",
       "opponent": "The Toy Men",
       "oppSlug": "the-toy-men",
       "ha": "Home",
-      "venue": "",
+      "venue": "Basketball Airdome",
       "cat": "S.Development 2 Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-06-25T20:30:00"
     }
   ],
   "results": [
