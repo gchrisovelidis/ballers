@@ -152,7 +152,7 @@ def build_html(upcoming: dict, dt: datetime, gcal_url: str | None) -> str:
     opponent     = upcoming.get("opponent", "TBD")
     time_str     = upcoming.get("time", "--:--")[:5]
     venue        = upcoming.get("venue", "TBD")
-    home_away    = (upcoming.get("home_away") or "").upper()
+    home_away    = (upcoming.get("ha") or "").upper()
     display_date = format_display_date(dt)
 
     # Home / Away badge
@@ -344,7 +344,7 @@ def main() -> None:
         print("⚠️  recipients.txt is empty or missing — skipping.")
         return
 
-    upcoming = data.get("upcoming")
+    upcoming = data.get("nextGame")
 
     if not upcoming:
         print("ℹ️  No upcoming match in data.json — skipping.")
