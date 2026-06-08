@@ -1,0 +1,7 @@
+# Air Ballers — Email Recipients
+# One email address per line.
+# Lines starting with # are ignored.
+
+george@gmail.com
+teammate1@gmail.com
+teammate2@gmail.com
