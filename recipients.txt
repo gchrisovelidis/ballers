@@ -2,4 +2,5 @@
 # One email address per line.
 # Lines starting with # are ignored.
 
-gchrisovelidis@hotmail.com
+george.c.chrisovelidis@gmail.com
+antkoutz@yahoo.gr
