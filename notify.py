@@ -21,9 +21,9 @@ RECIPIENTS_FILE     = "recipients.txt"
 
 # ── Config ───────────────────────────────────────────────────────────────────
 TEAM_NAME           = "Air Ballers"
-LEAGUE_NAME         = "Thessaloniki Amateur League"
+LEAGUE_NAME         = "Thessaloniki Basketaki League"
 MATCH_DURATION_HRS  = 2          # assumed game length for calendar end time
-SITE_URL            = "https://gchrisovelidis.github.io/ballers_v2"
+SITE_URL            = "https://gchrisovelidis.github.io/ballers/"
 
 SENDER_EMAIL        = os.environ["GMAIL_ADDRESS"]
 SENDER_PASSWORD     = os.environ["GMAIL_APP_PASSWORD"]
@@ -293,7 +293,7 @@ def build_html(upcoming: dict, dt: datetime, gcal_url: str | None) -> str:
       <td style="background:#080808;padding:14px 36px;border-top:1px solid #1a1a1a;">
         <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;
                   color:#333;letter-spacing:1px;text-transform:uppercase;">
-          Air Ballers · Thessaloniki Amateur League · Auto-generated notification
+          Air Ballers · Thessaloniki Basketaki League · Auto-generated notification
         </p>
       </td>
     </tr>
@@ -336,7 +336,7 @@ def build_plain_text(upcoming: dict, dt: datetime, gcal_url: str | None) -> str:
         f"Σελίδα ομάδας: {SITE_URL}",
         "",
         "─" * 36,
-        "Air Ballers · Thessaloniki Amateur League",
+        "Air Ballers · Thessaloniki Basketaki League",
     ]
 
     return "\n".join(line for line in lines if line is not None)
