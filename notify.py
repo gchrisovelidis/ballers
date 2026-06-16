@@ -305,19 +305,62 @@ def build_html(upcoming: dict, dt: datetime, gcal_url: str | None) -> str:
 </html>"""
 
 
+# ── Plain text builder ───────────────────────────────────────────────────────
+
+def build_plain_text(upcoming: dict, dt: datetime, gcal_url: str | None) -> str:
+    opponent     = upcoming.get("opponent", "TBD")
+    time_str     = upcoming.get("time", "--:--")[:5]
+    venue        = upcoming.get("venue", "TBD")
+    home_away    = (upcoming.get("ha") or "").upper()
+    display_date = format_display_date(dt)
+
+    lines = [
+        "AIR BALLERS — ΕΠΟΜΕΝΟΣ ΑΓΩΝΑΣ",
+        "=" * 36,
+        "",
+        f"Air Ballers vs {opponent}",
+        f"{'HOME' if home_away == 'HOME' else 'AWAY' if home_away == 'AWAY' else ''}".strip(),
+        "",
+        f"Ημερομηνία : {display_date}",
+        f"Ώρα        : {time_str}",
+        f"Γήπεδο     : {venue}",
+        "",
+        "─" * 36,
+    ]
+
+    if gcal_url:
+        lines += ["", "Πρόσθεσε τον αγώνα στο Google Calendar:", gcal_url]
+
+    lines += [
+        "",
+        f"Σελίδα ομάδας: {SITE_URL}",
+        "",
+        "─" * 36,
+        "Air Ballers · Thessaloniki Amateur League",
+    ]
+
+    return "\n".join(line for line in lines if line is not None)
+
+
 # ── Send ─────────────────────────────────────────────────────────────────────
 
 def send_email(recipients: list[str], upcoming: dict, dt: datetime,
                gcal_url: str | None, ics_content: str | None) -> None:
     opponent = upcoming.get("opponent", "TBD")
 
+    # Outer container holds the body alternative block + ICS attachment
     msg = MIMEMultipart("mixed")
     msg["Subject"] = f"🏀 Air Ballers — Επόμενος Αγώνας vs {opponent}"
     msg["From"]    = SENDER_EMAIL
     msg["To"]      = ", ".join(recipients)
 
-    msg.attach(MIMEText(build_html(upcoming, dt, gcal_url), "html", "utf-8"))
+    # Inner alternative block: plain text + HTML (spam filters prefer both)
+    body = MIMEMultipart("alternative")
+    body.attach(MIMEText(build_plain_text(upcoming, dt, gcal_url), "plain", "utf-8"))
+    body.attach(MIMEText(build_html(upcoming, dt, gcal_url),       "html",  "utf-8"))
+    msg.attach(body)
 
+    # ICS calendar attachment
     if ics_content:
         filename = f"AirBallers_vs_{opponent.replace(' ', '_')}.ics"
         ics_part = MIMEBase("text", "calendar", method="PUBLISH", charset="UTF-8")
