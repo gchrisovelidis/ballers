@@ -1,39 +1,27 @@
 {
-  "updated": "2026-06-13T09:18:43.321351",
+  "updated": "2026-06-16T07:11:24.572540",
   "record": {
     "wins": 15,
-    "losses": 14,
-    "pct": 52
+    "losses": 15,
+    "pct": 50
   },
   "streak": {
-    "type": "win",
+    "type": "loss",
     "count": 1
   },
   "nextGame": {
-    "dateTime": "13/06/2026 20:30",
-    "date": "13/06/2026",
-    "time": "20:30",
-    "opponent": "Tumbai Chocolate",
-    "oppSlug": "tumbai-chocolate",
-    "ha": "Home",
-    "venue": "Ιβανώφειο Κλειστό Γυμναστήριο",
+    "dateTime": "17/06/2026 19:00",
+    "date": "17/06/2026",
+    "time": "19:00",
+    "opponent": "East Side Pylaia",
+    "oppSlug": "east-side-pylaia",
+    "ha": "Away",
+    "venue": "Respect Arena FIBA",
     "cat": "S.Development 2 Thessaloniki",
     "isFuture": true,
-    "ts": "2026-06-13T20:30:00"
+    "ts": "2026-06-17T19:00:00"
   },
   "schedule": [
-    {
-      "dateTime": "13/06/2026 20:30",
-      "date": "13/06/2026",
-      "time": "20:30",
-      "opponent": "Tumbai Chocolate",
-      "oppSlug": "tumbai-chocolate",
-      "ha": "Home",
-      "venue": "Ιβανώφειο Κλειστό Γυμναστήριο",
-      "cat": "S.Development 2 Thessaloniki",
-      "isFuture": true,
-      "ts": "2026-06-13T20:30:00"
-    },
     {
       "dateTime": "17/06/2026 19:00",
       "date": "17/06/2026",
@@ -72,6 +60,17 @@
     }
   ],
   "results": [
+    {
+      "date": "12/06/2026",
+      "opponent": "Tumbai Chocolate",
+      "oppSlug": "",
+      "ts": 0,
+      "os": 20,
+      "win": false,
+      "ha": "Home",
+      "cat": "S.Development 2 Thessaloniki",
+      "gameId": "36480"
+    },
     {
       "date": "07/06/2026",
       "opponent": "Alley Oopsies",
