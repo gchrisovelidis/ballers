@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-28T08:54:03.045769",
+  "updated": "2026-06-29T13:54:28.133722",
   "record": {
     "wins": 16,
     "losses": 17,
@@ -9,8 +9,32 @@
     "type": "win",
     "count": 1
   },
-  "nextGame": null,
-  "schedule": [],
+  "nextGame": {
+    "dateTime": "03/07/2026 20:30",
+    "date": "03/07/2026",
+    "time": "20:30",
+    "opponent": "Squid Ballers",
+    "oppSlug": "squid-ballers",
+    "ha": "Away",
+    "venue": "Ιβανώφειο Κλειστό Γυμναστήριο",
+    "cat": "S.Development 2 Thessaloniki",
+    "isFuture": true,
+    "ts": "2026-07-03T20:30:00"
+  },
+  "schedule": [
+    {
+      "dateTime": "03/07/2026 20:30",
+      "date": "03/07/2026",
+      "time": "20:30",
+      "opponent": "Squid Ballers",
+      "oppSlug": "squid-ballers",
+      "ha": "Away",
+      "venue": "Ιβανώφειο Κλειστό Γυμναστήριο",
+      "cat": "S.Development 2 Thessaloniki",
+      "isFuture": true,
+      "ts": "2026-07-03T20:30:00"
+    }
+  ],
   "results": [
     {
       "date": "25/06/2026",
