@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-16T10:59:13.694166",
+  "updated": "2026-09-17T11:20:20.441249",
   "record": {
     "wins": 16,
     "losses": 18,
@@ -9,19 +9,30 @@
     "type": "loss",
     "count": 1
   },
-  "nextGame": null,
+  "nextGame": {
+    "dateTime": "22/09/2026 20:30",
+    "date": "22/09/2026",
+    "time": "20:30",
+    "opponent": "Sky is the limit",
+    "oppSlug": "sky-is-the-limit",
+    "ha": "Away",
+    "venue": "Respect Arena FIBA",
+    "cat": "W.Development Thessaloniki",
+    "isFuture": true,
+    "ts": "2026-09-22T20:30:00"
+  },
   "schedule": [
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "22/09/2026 20:30",
+      "date": "22/09/2026",
+      "time": "20:30",
       "opponent": "Sky is the limit",
       "oppSlug": "sky-is-the-limit",
       "ha": "Away",
-      "venue": "",
+      "venue": "Respect Arena FIBA",
       "cat": "W.Development Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-09-22T20:30:00"
     },
     {
       "dateTime": "-",
