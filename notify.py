@@ -8,6 +8,7 @@ import json
 import os
 import smtplib
 import urllib.parse
+import urllib.request
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
@@ -17,7 +18,14 @@ from datetime import datetime, timedelta
 # ── Paths ────────────────────────────────────────────────────────────────────
 DATA_FILE           = "data.json"
 LAST_NOTIFIED_FILE  = "last_notified.json"
-RECIPIENTS_FILE     = "recipients.txt"
+RECIPIENTS_FILE     = "recipients.txt"   # local fallback only
+
+# Recipients now live in a private Gist (kept in sync with the site's
+# subscribe form via api/subscribe.js). Set these as GitHub Actions
+# secrets; if either is missing, we fall back to the local file above.
+GIST_ID             = os.environ.get("GIST_ID")
+GIST_TOKEN          = os.environ.get("GIST_TOKEN")
+RECIPIENTS_FILENAME = "recipients.txt"   # the file name inside the Gist
 
 # ── Config ───────────────────────────────────────────────────────────────────
 TEAM_NAME           = "Air Ballers"
@@ -45,13 +53,49 @@ def load_json(path: str) -> dict:
 
 
 def load_recipients() -> list[str]:
+    if GIST_ID and GIST_TOKEN:
+        recipients = _load_recipients_from_gist()
+        if recipients is not None:
+            return recipients
+        print("⚠️  Falling back to local recipients.txt.")
+    return _load_recipients_from_file()
+
+
+def _parse_recipients(content: str) -> list[str]:
+    return [
+        line.strip()
+        for line in content.splitlines()
+        if line.strip() and not line.startswith("#")
+    ]
+
+
+def _load_recipients_from_gist() -> list[str] | None:
+    req = urllib.request.Request(
+        f"https://api.github.com/gists/{GIST_ID}",
+        headers={
+            "Authorization": f"Bearer {GIST_TOKEN}",
+            "Accept": "application/vnd.github+json",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            gist_data = json.loads(resp.read().decode("utf-8"))
+    except Exception as e:
+        print(f"⚠️  Could not reach Gist: {e}")
+        return None
+
+    file_info = (gist_data.get("files") or {}).get(RECIPIENTS_FILENAME)
+    if not file_info:
+        print(f"⚠️  Gist has no file named '{RECIPIENTS_FILENAME}'.")
+        return None
+
+    return _parse_recipients(file_info.get("content", ""))
+
+
+def _load_recipients_from_file() -> list[str]:
     try:
         with open(RECIPIENTS_FILE, "r", encoding="utf-8") as f:
-            return [
-                line.strip()
-                for line in f
-                if line.strip() and not line.startswith("#")
-            ]
+            return _parse_recipients(f.read())
     except FileNotFoundError:
         return []
 
