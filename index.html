@@ -738,6 +738,14 @@ async function init() {
   }
 }
 
+// On any Vercel domain (production or preview), use a relative path so
+// each deployment calls its OWN /api/subscribe function. On GitHub Pages
+// (a different domain), we have to call Vercel's full URL, which is why
+// the function has CORS headers for that origin.
+const API_BASE = window.location.hostname.endsWith('vercel.app')
+  ? ''
+  : 'https://air-ballers.vercel.app';
+
 // ─── SUBSCRIBE ────────────────────────────────────────────────────────────────
 function initSubscribe() {
   const form  = $('sub-form');
@@ -752,7 +760,7 @@ function initSubscribe() {
     btn.textContent = '...';
     note.className = 'sub-note';
     try {
-      const res = await fetch('https://air-ballers.vercel.app/api/subscribe', {
+      const res = await fetch(`${API_BASE}/api/subscribe`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.value })
