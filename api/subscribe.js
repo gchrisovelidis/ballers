@@ -1,13 +1,34 @@
 // api/subscribe.js
-// Vercel serverless function: appends a submitted email to recipients.txt
-// via the GitHub Contents API, so notify.py's existing pipeline picks it
-// up with zero changes on its end.
+// Vercel serverless function: appends a submitted email to a private
+// GitHub Gist holding the recipient list. notify.py reads from the same
+// Gist, so both stay in sync. CORS-enabled so this works whether the
+// form is submitted from the Vercel domain or from GitHub Pages.
 
 const GITHUB_API = 'https://api.github.com';
 
+// Browser origins allowed to call this endpoint.
+const ALLOWED_ORIGINS = [
+  'https://air-ballers.vercel.app',
+  'https://gchrisovelidis.github.io',
+];
+
 module.exports = async function handler(req, res) {
+  const origin = req.headers.origin;
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    // Preflight request — browsers send this automatically before
+    // a cross-origin POST with a JSON body.
+    return res.status(204).end();
+  }
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
+    res.setHeader('Allow', 'POST, OPTIONS');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
@@ -17,42 +38,37 @@ module.exports = async function handler(req, res) {
   }
   const cleanEmail = email.trim().toLowerCase();
 
-  const {
-    GITHUB_TOKEN,
-    GITHUB_OWNER,
-    GITHUB_REPO,
-    GITHUB_BRANCH,
-    RECIPIENTS_PATH,
-  } = process.env;
-
-  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-    console.error('Missing required environment variables (GITHUB_TOKEN / GITHUB_OWNER / GITHUB_REPO)');
+  const { GIST_TOKEN, GIST_ID, RECIPIENTS_FILENAME } = process.env;
+  if (!GIST_TOKEN || !GIST_ID) {
+    console.error('Missing required environment variables (GIST_TOKEN / GIST_ID)');
     return res.status(500).json({ error: 'Server misconfigured.' });
   }
-
-  const branch = GITHUB_BRANCH || 'main';
-  const path = RECIPIENTS_PATH || 'recipients.txt';
-  const baseFileUrl = `${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
+  const filename = RECIPIENTS_FILENAME || 'recipients.txt';
 
   try {
-    // 1. Fetch the current file (need its sha + content to update it)
-    const getRes = await fetch(`${baseFileUrl}?ref=${branch}`, {
+    // 1. Fetch the current gist content
+    const getRes = await fetch(`${GITHUB_API}/gists/${GIST_ID}`, {
       headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
+        Authorization: `Bearer ${GIST_TOKEN}`,
         Accept: 'application/vnd.github+json',
       },
     });
 
     if (!getRes.ok) {
       const errBody = await getRes.text();
-      console.error('GitHub GET failed', getRes.status, errBody);
+      console.error('Gist GET failed', getRes.status, errBody);
       return res.status(502).json({ error: 'Could not reach the recipients list.' });
     }
 
-    const fileData = await getRes.json();
-    const currentContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+    const gistData = await getRes.json();
+    const file = gistData.files && gistData.files[filename];
+    if (!file) {
+      console.error(`Gist has no file named "${filename}"`);
+      return res.status(500).json({ error: 'Server misconfigured.' });
+    }
+    const currentContent = file.content;
 
-    // 2. Check for duplicates (ignore comment lines and blanks, same as notify.py would)
+    // 2. Check for duplicates (ignore comment lines and blanks)
     const existingEmails = currentContent
       .split('\n')
       .map((l) => l.trim())
@@ -63,29 +79,27 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ status: 'already_subscribed' });
     }
 
-    // 3. Append the new email on its own line, preserving the header/comments
+    // 3. Append the new email, preserving header/comments
     const newContent = currentContent.replace(/\n?$/, '') + `\n${cleanEmail}\n`;
-    const newContentEncoded = Buffer.from(newContent, 'utf-8').toString('base64');
 
-    // 4. Commit the update back to GitHub
-    const putRes = await fetch(baseFileUrl, {
-      method: 'PUT',
+    // 4. Save it back to the gist
+    const patchRes = await fetch(`${GITHUB_API}/gists/${GIST_ID}`, {
+      method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
+        Authorization: `Bearer ${GIST_TOKEN}`,
         Accept: 'application/vnd.github+json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: 'chore: add subscriber via site form',
-        content: newContentEncoded,
-        sha: fileData.sha,
-        branch,
+        files: {
+          [filename]: { content: newContent },
+        },
       }),
     });
 
-    if (!putRes.ok) {
-      const errBody = await putRes.text();
-      console.error('GitHub PUT failed', putRes.status, errBody);
+    if (!patchRes.ok) {
+      const errBody = await patchRes.text();
+      console.error('Gist PATCH failed', patchRes.status, errBody);
       return res.status(502).json({ error: 'Could not save your subscription.' });
     }
 
