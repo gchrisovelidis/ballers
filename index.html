@@ -752,7 +752,7 @@ function initSubscribe() {
     btn.textContent = '...';
     note.className = 'sub-note';
     try {
-      const res = await fetch('/api/subscribe', {
+      const res = await fetch('https://air-ballers.vercel.app/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.value })
