@@ -202,6 +202,23 @@ body {
 .p-pill.apg { background:rgba(255,255,255,0.04); color:#888; border:1px solid rgba(255,255,255,0.08); }
 .p-pill-label { opacity:0.7; font-size:0.46rem; text-transform:uppercase; }
 
+/* SUBSCRIBE */
+.subscribe-board { background:var(--panel); border:1px solid var(--border2); border-radius:4px; padding:2.6rem 2rem; display:flex; flex-direction:column; align-items:center; gap:1.1rem; text-align:center; position:relative; overflow:hidden; }
+.subscribe-board::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:var(--orange); opacity:0.7; }
+.sub-eyebrow { display:flex; align-items:center; gap:0.6rem; font-family:var(--mono); font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--muted); }
+.sub-dot { width:6px; height:6px; border-radius:50%; background:var(--orange); box-shadow:0 0 8px rgba(255,92,0,0.6); }
+.sub-title { font-family:var(--display); font-size:clamp(1.8rem,3.4vw,2.6rem); letter-spacing:0.05em; color:var(--white); line-height:1; }
+.sub-copy { max-width:480px; font-family:var(--ui); font-size:0.92rem; line-height:1.6; color:#999; }
+.sub-form { display:flex; width:100%; max-width:420px; margin-top:0.4rem; border:1px solid var(--border2); border-radius:3px; overflow:hidden; background:var(--bg2); }
+.sub-input { flex:1; min-width:0; background:transparent; border:none; outline:none; padding:0.9rem 1rem; font-family:var(--mono); font-size:0.85rem; color:var(--white); }
+.sub-input::placeholder { color:var(--muted); }
+.sub-btn { border:none; background:var(--orange); color:#000; font-family:var(--display); font-size:1rem; letter-spacing:0.08em; padding:0 1.6rem; cursor:pointer; transition:background 0.15s; white-space:nowrap; }
+.sub-btn:hover { background:#e65200; }
+.sub-note { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.2rem; }
+.sub-note.ok  { color:var(--orange); }
+.sub-note.err { color:var(--red); }
+@media(max-width:520px) { .sub-form { flex-direction:column; } .sub-btn { padding:0.85rem; } }
+
 /* FOOTER */
 .arena-footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--border2); display:flex; align-items:center; justify-content:space-between; gap:1rem; }
 .footer-left { display:flex; align-items:center; gap:1rem; }
@@ -365,6 +382,21 @@ body {
   </div>
   <div class="roster-grid" id="roster-grid">
     <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-family:var(--mono);font-size:0.7rem;background:var(--panel);">Loading...</div>
+  </div>
+
+  <div class="sec-label">
+    <span class="sec-label-text">Stay In The Loop</span><div class="sec-rule"></div>
+  </div>
+  <div class="subscribe-board">
+    <div class="sub-eyebrow"><span class="sub-dot"></span>Never Miss Tip-Off<span class="sub-dot"></span></div>
+    <div class="sub-title">GET GAME ALERTS</div>
+    <div class="sub-copy">Drop your email and we'll notify you the moment a new Air Ballers match hits the schedule — date, opponent, and venue, straight to your inbox.</div>
+    <form class="sub-form" id="sub-form">
+      <label for="sub-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Email address</label>
+      <input class="sub-input" id="sub-email" type="email" placeholder="your@email.com" required>
+      <button class="sub-btn" type="submit">SUBSCRIBE</button>
+    </form>
+    <div class="sub-note" id="sub-note">One email per new fixture. No spam, unsubscribe anytime.</div>
   </div>
 
   <footer class="arena-footer">
@@ -706,7 +738,41 @@ async function init() {
   }
 }
 
+// ─── SUBSCRIBE ────────────────────────────────────────────────────────────────
+function initSubscribe() {
+  const form  = $('sub-form');
+  const note  = $('sub-note');
+  const email = $('sub-email');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.sub-btn');
+    btn.disabled = true;
+    btn.textContent = '...';
+    note.className = 'sub-note';
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.value })
+      });
+      if (!res.ok) throw new Error('failed');
+      note.textContent = "You're in! Watch your inbox for the next fixture.";
+      note.className = 'sub-note ok';
+      form.reset();
+    } catch (err) {
+      note.textContent = 'Something went wrong — try again in a bit.';
+      note.className = 'sub-note err';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'SUBSCRIBE';
+    }
+  });
+}
+
 init();
+initSubscribe();
 </script>
 </body>
 </html>
