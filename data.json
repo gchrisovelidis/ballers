@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-19T10:27:37.211651",
+  "updated": "2026-09-22T11:07:12.598877",
   "record": {
     "wins": 16,
     "losses": 18,
@@ -35,16 +35,16 @@
       "ts": "2026-09-22T20:30:00"
     },
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "04/10/2026 21:30",
+      "date": "04/10/2026",
+      "time": "21:30",
       "opponent": "SKG Sonics",
       "oppSlug": "skg-sonics",
       "ha": "Home",
-      "venue": "",
+      "venue": "10Academy Basketball Hall",
       "cat": "W.Development Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-10-04T21:30:00"
     },
     {
       "dateTime": "-",
