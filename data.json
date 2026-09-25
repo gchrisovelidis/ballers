@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-22T11:07:12.598877",
+  "updated": "2026-09-25T11:21:16.951356",
   "record": {
     "wins": 16,
     "losses": 18,
@@ -10,30 +10,18 @@
     "count": 1
   },
   "nextGame": {
-    "dateTime": "22/09/2026 20:30",
-    "date": "22/09/2026",
-    "time": "20:30",
-    "opponent": "Sky is the limit",
-    "oppSlug": "sky-is-the-limit",
-    "ha": "Away",
-    "venue": "Respect Arena FIBA",
+    "dateTime": "04/10/2026 21:30",
+    "date": "04/10/2026",
+    "time": "21:30",
+    "opponent": "SKG Sonics",
+    "oppSlug": "skg-sonics",
+    "ha": "Home",
+    "venue": "10Academy Basketball Hall",
     "cat": "W.Development Thessaloniki",
     "isFuture": true,
-    "ts": "2026-09-22T20:30:00"
+    "ts": "2026-10-04T21:30:00"
   },
   "schedule": [
-    {
-      "dateTime": "22/09/2026 20:30",
-      "date": "22/09/2026",
-      "time": "20:30",
-      "opponent": "Sky is the limit",
-      "oppSlug": "sky-is-the-limit",
-      "ha": "Away",
-      "venue": "Respect Arena FIBA",
-      "cat": "W.Development Thessaloniki",
-      "isFuture": true,
-      "ts": "2026-09-22T20:30:00"
-    },
     {
       "dateTime": "04/10/2026 21:30",
       "date": "04/10/2026",
@@ -639,5 +627,97 @@
       "gameId": "31351"
     }
   ],
-  "players": []
+  "players": [
+    {
+      "raw": "Χρυσοβελίδης Χρή. Γεώργιος",
+      "surname": "Χρυσοβελίδης",
+      "firstName": "Γεώργιος",
+      "gp": "1",
+      "ppg": "15",
+      "rpg": "6",
+      "apg": "3",
+      "spg": "0",
+      "ftp": "0%",
+      "twop": "86%",
+      "thrp": "17%"
+    },
+    {
+      "raw": "Γούλας Ιωά. Τηλέμαχος",
+      "surname": "Γούλας",
+      "firstName": "Τηλέμαχος",
+      "gp": "1",
+      "ppg": "13",
+      "rpg": "2",
+      "apg": "3",
+      "spg": "1",
+      "ftp": "0%",
+      "twop": "100%",
+      "thrp": "60%"
+    },
+    {
+      "raw": "Φραγγής Ιωά. Κωνσταντίνος",
+      "surname": "Φραγγής",
+      "firstName": "Κωνσταντίνος",
+      "gp": "1",
+      "ppg": "13",
+      "rpg": "11",
+      "apg": "8",
+      "spg": "1",
+      "ftp": "20%",
+      "twop": "60%",
+      "thrp": "0%"
+    },
+    {
+      "raw": "Κουτζιαμπασης Θωμ. Αντώνιος",
+      "surname": "Κουτζιαμπασης",
+      "firstName": "Αντώνιος",
+      "gp": "1",
+      "ppg": "12",
+      "rpg": "3",
+      "apg": "2",
+      "spg": "1",
+      "ftp": "0%",
+      "twop": "55%",
+      "thrp": "0%"
+    },
+    {
+      "raw": "Γκουστίλης Αθα. Γεώργιος",
+      "surname": "Γκουστίλης",
+      "firstName": "Γεώργιος",
+      "gp": "1",
+      "ppg": "7",
+      "rpg": "4",
+      "apg": "2",
+      "spg": "1",
+      "ftp": "0%",
+      "twop": "67%",
+      "thrp": "33%"
+    },
+    {
+      "raw": "Βράνας Ηλί. Γεώργιος",
+      "surname": "Βράνας",
+      "firstName": "Γεώργιος",
+      "gp": "1",
+      "ppg": "6",
+      "rpg": "8",
+      "apg": "1",
+      "spg": "1",
+      "ftp": "0%",
+      "twop": "38%",
+      "thrp": "0%"
+    },
+    {
+      "raw": "Στρατάκης Χρή. Ευστράτιος",
+      "surname": "Στρατάκης",
+      "firstName": "Ευστράτιος",
+      "gp": "1",
+      "ppg": "6",
+      "rpg": "7",
+      "apg": "2",
+      "spg": "0",
+      "ftp": "50%",
+      "twop": "67%",
+      "thrp": "0%"
+    }
+  ]
 }
