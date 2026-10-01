@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-28T13:09:06.337680",
+  "updated": "2026-10-01T12:37:10.825784",
   "record": {
     "wins": 16,
     "losses": 18,
@@ -35,16 +35,16 @@
       "ts": "2026-10-04T21:30:00"
     },
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "06/10/2026 20:30",
+      "date": "06/10/2026",
+      "time": "20:30",
       "opponent": "Δεν έχει",
       "oppSlug": "den-exei",
       "ha": "Away",
-      "venue": "",
+      "venue": "Basketball Airdome",
       "cat": "W.Development Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-10-06T20:30:00"
     },
     {
       "dateTime": "-",
