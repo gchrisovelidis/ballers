@@ -18,7 +18,8 @@ from html.parser import HTMLParser
 
 # ── CONFIG ─────────────────────────────────────────────────────────────────────
 TEAM_ID        = 558
-CURRENT_SEASON = "25/26"
+# Fallback only — the real value is detected from the API's "seasons" list in main()
+CURRENT_SEASON = "26/27"
 BASE           = "https://www.basketaki.com"
 CDN            = "https://basketaki-web.b-cdn.net"
 API_PROFILE    = f"{BASE}/api/v1/teams/{TEAM_ID}/profile"
@@ -355,6 +356,15 @@ def main():
     if not api_data:
         print("  ERROR: Could not fetch API data. Aborting.", file=sys.stderr)
         sys.exit(1)
+
+    # Auto-detect the current season (highest "order" in the API's seasons list)
+    global CURRENT_SEASON
+    seasons = [s for s in api_data.get("seasons", []) if s.get("name")]
+    if seasons:
+        CURRENT_SEASON = max(seasons, key=lambda s: s.get("order", 0))["name"]
+        print(f"  Current season (from API): {CURRENT_SEASON}")
+    else:
+        print(f"  WARNING: no seasons in API — using fallback {CURRENT_SEASON}", file=sys.stderr)
 
     results_raw  = api_data.get("results", [])
     schedule_raw = api_data.get("schedule", [])
