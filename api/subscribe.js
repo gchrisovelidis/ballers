@@ -5,7 +5,27 @@
 
 const GITHUB_API = 'https://api.github.com';
 
+// The site is served from GitHub Pages, so the browser calls this function
+// cross-origin. Only these origins may use it.
+const ALLOWED_ORIGINS = [
+  'https://gchrisovelidis.github.io',
+  'https://air-ballers.vercel.app',
+];
+
 module.exports = async function handler(req, res) {
+  const origin = req.headers.origin;
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Browser preflight check before the real POST
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });

@@ -752,7 +752,8 @@ function initSubscribe() {
     btn.textContent = '...';
     note.className = 'sub-note';
     try {
-      const res = await fetch('/api/subscribe', {
+      // Subscribe function runs on Vercel (GitHub Pages can't run server code)
+      const res = await fetch('https://air-ballers.vercel.app/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.value })
