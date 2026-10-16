@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-13T13:43:52.484752",
+  "updated": "2026-10-16T10:26:36.906219",
   "record": {
     "wins": 1,
     "losses": 3,
@@ -9,19 +9,30 @@
     "type": "loss",
     "count": 3
   },
-  "nextGame": null,
+  "nextGame": {
+    "dateTime": "19/10/2026 22:00",
+    "date": "19/10/2026",
+    "time": "22:00",
+    "opponent": "Αθηναϊκή Ζυθοποιία",
+    "oppSlug": "athinaiki-zuthopoiia",
+    "ha": "Home",
+    "venue": "Ιβανώφειο Κλειστό Γυμναστήριο",
+    "cat": "W.Development Thessaloniki",
+    "isFuture": true,
+    "ts": "2026-10-19T22:00:00"
+  },
   "schedule": [
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "19/10/2026 22:00",
+      "date": "19/10/2026",
+      "time": "22:00",
       "opponent": "Αθηναϊκή Ζυθοποιία",
       "oppSlug": "athinaiki-zuthopoiia",
       "ha": "Home",
-      "venue": "",
+      "venue": "Ιβανώφειο Κλειστό Γυμναστήριο",
       "cat": "W.Development Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-10-19T22:00:00"
     },
     {
       "dateTime": "-",
