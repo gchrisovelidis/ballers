@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25T10:54:28.553966",
+  "updated": "2026-10-28T12:16:30.392063",
   "record": {
     "wins": 1,
     "losses": 4,
@@ -9,19 +9,30 @@
     "type": "loss",
     "count": 4
   },
-  "nextGame": null,
+  "nextGame": {
+    "dateTime": "02/11/2026 20:30",
+    "date": "02/11/2026",
+    "time": "20:30",
+    "opponent": "ΠΟΠ84",
+    "oppSlug": "pop84",
+    "ha": "Away",
+    "venue": "Respect Arena NBA",
+    "cat": "W.Development Thessaloniki",
+    "isFuture": true,
+    "ts": "2026-11-02T20:30:00"
+  },
   "schedule": [
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "02/11/2026 20:30",
+      "date": "02/11/2026",
+      "time": "20:30",
       "opponent": "ΠΟΠ84",
       "oppSlug": "pop84",
       "ha": "Away",
-      "venue": "",
+      "venue": "Respect Arena NBA",
       "cat": "W.Development Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-11-02T20:30:00"
     },
     {
       "dateTime": "-",
