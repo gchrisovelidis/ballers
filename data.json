@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-28T12:16:30.392063",
+  "updated": "2026-10-31T11:49:12.113403",
   "record": {
     "wins": 1,
     "losses": 4,
@@ -35,16 +35,16 @@
       "ts": "2026-11-02T20:30:00"
     },
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "09/11/2026 20:30",
+      "date": "09/11/2026",
+      "time": "20:30",
       "opponent": "Jazz Est. 2022",
       "oppSlug": "jazz-2022",
       "ha": "Home",
-      "venue": "",
+      "venue": "Respect Arena FIBA",
       "cat": "W.Development Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-11-09T20:30:00"
     },
     {
       "dateTime": "-",
