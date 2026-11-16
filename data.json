@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13T14:03:47.534700",
+  "updated": "2026-11-16T15:03:25.224841",
   "record": {
     "wins": 1,
     "losses": 6,
@@ -9,19 +9,30 @@
     "type": "loss",
     "count": 6
   },
-  "nextGame": null,
+  "nextGame": {
+    "dateTime": "26/11/2026 20:30",
+    "date": "26/11/2026",
+    "time": "20:30",
+    "opponent": "Magoofyδες",
+    "oppSlug": "magoofydes",
+    "ha": "Away",
+    "venue": "Respect Arena FIBA",
+    "cat": "W.Development Thessaloniki",
+    "isFuture": true,
+    "ts": "2026-11-26T20:30:00"
+  },
   "schedule": [
     {
-      "dateTime": "-",
-      "date": "-",
-      "time": "-",
+      "dateTime": "26/11/2026 20:30",
+      "date": "26/11/2026",
+      "time": "20:30",
       "opponent": "Magoofyδες",
       "oppSlug": "magoofydes",
       "ha": "Away",
-      "venue": "",
+      "venue": "Respect Arena FIBA",
       "cat": "W.Development Thessaloniki",
-      "isFuture": false,
-      "ts": null
+      "isFuture": true,
+      "ts": "2026-11-26T20:30:00"
     },
     {
       "dateTime": "-",
